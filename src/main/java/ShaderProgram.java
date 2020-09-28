@@ -31,7 +31,7 @@ public final class ShaderProgram {
 
     public ShaderProgram link() {
         glLinkProgram(programId);
-        logShaderStatus(programId, GL_LINK_STATUS);
+        logProgramStatus(programId, GL_LINK_STATUS);
         if (vertexShaderId != NULL) {
             glDetachShader(programId, vertexShaderId);
         }
@@ -39,7 +39,7 @@ public final class ShaderProgram {
             glDetachShader(programId, fragmentShaderId);
         }
         glValidateProgram(programId);
-        logShaderStatus(programId, GL_VALIDATE_STATUS);
+        logProgramStatus(programId, GL_VALIDATE_STATUS);
 
         return this;
     }
@@ -73,6 +73,17 @@ public final class ShaderProgram {
     private void logShaderStatus(int shaderId, int statusToCheck) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
             if (glGetShaderi(shaderId, statusToCheck) == NULL) {
+                ByteBuffer infoLog = stack.malloc(256 * Integer.BYTES);
+                glGetShaderInfoLog(shaderId, new int[256], infoLog);
+
+                System.out.println(infoLog.asReadOnlyBuffer().toString());
+            }
+        }
+    }
+
+    private void logProgramStatus(int shaderId, int statusToCheck) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            if (glGetProgrami(shaderId, statusToCheck) == NULL) {
                 ByteBuffer infoLog = stack.malloc(256 * Integer.BYTES);
                 glGetShaderInfoLog(shaderId, new int[256], infoLog);
 
