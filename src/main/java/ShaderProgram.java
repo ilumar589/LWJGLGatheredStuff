@@ -1,10 +1,8 @@
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL20.glGetShaderInfoLog;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public final class ShaderProgram {
@@ -31,7 +29,7 @@ public final class ShaderProgram {
 
     public ShaderProgram link() {
         glLinkProgram(programId);
-        logProgramStatus(programId, GL_LINK_STATUS);
+        logStatus(programId, GL_LINK_STATUS);
         if (vertexShaderId != NULL) {
             glDetachShader(programId, vertexShaderId);
         }
@@ -39,13 +37,15 @@ public final class ShaderProgram {
             glDetachShader(programId, fragmentShaderId);
         }
         glValidateProgram(programId);
-        logProgramStatus(programId, GL_VALIDATE_STATUS);
+        logStatus(programId, GL_VALIDATE_STATUS);
 
         return this;
     }
 
-    public void bind() {
+    public ShaderProgram bind() {
         glUseProgram(programId);
+
+        return this;
     }
 
     public void unbind() {
@@ -59,36 +59,44 @@ public final class ShaderProgram {
         }
     }
 
+    public int getProgramId() {
+        return programId;
+    }
+
     private int createShader(String shaderCode, int shaderType) {
         int shaderId = glCreateShader(shaderType);
 
         glShaderSource(shaderId, shaderCode);
         glCompileShader(shaderId);
-        logShaderStatus(shaderId, GL_COMPILE_STATUS);
+        logStatus(shaderId, GL_COMPILE_STATUS);
         glAttachShader(programId, shaderId);
 
         return shaderId;
     }
 
-    private void logShaderStatus(int shaderId, int statusToCheck) {
+    private void logStatus(int id, int statusToCheck) {
         try (MemoryStack stack = MemoryStack.stackPush()) {
-            if (glGetShaderi(shaderId, statusToCheck) == NULL) {
-                ByteBuffer infoLog = stack.malloc(256 * Integer.BYTES);
-                glGetShaderInfoLog(shaderId, new int[256], infoLog);
+            ByteBuffer infoLog = stack.malloc(256 * Integer.BYTES);
+            int[] infoLogLength = new int[256];
 
-                System.out.println(infoLog.asReadOnlyBuffer().toString());
+            switch (statusToCheck) {
+                case GL_COMPILE_STATUS: {
+                    if (glGetShaderi(id, statusToCheck) == NULL) {
+                        glGetShaderInfoLog(id, infoLogLength, infoLog);
+                    }
+                } break;
+                case GL_LINK_STATUS: {}
+                case GL_VALIDATE_STATUS: {
+                    if (glGetProgrami(id, statusToCheck) == NULL) {
+                        glGetProgramInfoLog(id, infoLogLength, infoLog);
+                    }
+                } break;
+                default: {
+                    throw new RuntimeException("No recognized log action has been sent: " + statusToCheck);
+                }
             }
-        }
-    }
 
-    private void logProgramStatus(int shaderId, int statusToCheck) {
-        try (MemoryStack stack = MemoryStack.stackPush()) {
-            if (glGetProgrami(shaderId, statusToCheck) == NULL) {
-                ByteBuffer infoLog = stack.malloc(256 * Integer.BYTES);
-                glGetShaderInfoLog(shaderId, new int[256], infoLog);
-
-                System.out.println(infoLog.asReadOnlyBuffer().toString());
-            }
+            System.out.println(infoLog.asReadOnlyBuffer().toString());
         }
     }
 }

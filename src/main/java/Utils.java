@@ -17,6 +17,9 @@ public final class Utils {
 
     private Utils() {}
 
+    public static String SHADERS_BASE_PATH = "src/main/resources/shaders";
+    public static String TEXTURES_BASE_PATH = "src/main/resources/textures";
+
     public static String loadResource(String fileName) {
         String result = null;
         try (InputStream in = Class.forName(Utils.class.getName()).getResourceAsStream(fileName);

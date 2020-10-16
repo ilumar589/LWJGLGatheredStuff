@@ -1,3 +1,5 @@
+import org.javatuples.Pair;
+import org.joml.Math;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -11,8 +13,7 @@ import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -110,13 +111,14 @@ public class Main {
 
     private void loop() {
 
-        new ShaderProgram()
-                .createVertexShader(Utils.readFileAsString("src/main/resources/vertex.glsl"))
-                .createFragmentShader(Utils.readFileAsString("src/main/resources/fragment.glsl"))
+        ShaderProgram shaderProgram = new ShaderProgram()
+                .createVertexShader(Utils.readFileAsString(Utils.SHADERS_BASE_PATH + "/vertex.glsl"))
+                .createFragmentShader(Utils.readFileAsString(Utils.SHADERS_BASE_PATH + "/fragment.glsl"))
                 .link()
                 .bind();
 
-        int triangleVao = Examples.triangleVertexArrayBuffer();
+
+        Pair<Integer, Integer> vaoAndTexture = Examples.loadTexture();
 
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
@@ -124,8 +126,8 @@ public class Main {
             glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            glBindVertexArray(triangleVao);
-
+            glBindTexture(GL_TEXTURE_2D, vaoAndTexture.getValue1());
+            glBindVertexArray(vaoAndTexture.getValue0());
             glDrawArrays(GL_TRIANGLES, 0, 3);
 
             glfwSwapBuffers(windowHandle); // swap the color buffers
