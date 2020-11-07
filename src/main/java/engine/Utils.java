@@ -1,3 +1,5 @@
+package engine;
+
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
@@ -69,7 +71,7 @@ public final class Utils {
                         break;
                     }
                     if (buffer.remaining() == 0) {
-                        buffer = resizeBuffer(buffer.flip(), buffer.capacity() * 3 / 2); // 50%
+                        buffer = resizeBuffer((ByteBuffer) buffer.flip(), buffer.capacity() * 3 / 2); // 50%
                     }
                 }
             }

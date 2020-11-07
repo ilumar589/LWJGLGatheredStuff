@@ -18,7 +18,7 @@
 
 ---------------  S U M M A R Y ------------
 
-Command Line: -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -Dfile.encoding=windows-1252 -Duser.country=US -Duser.language=en -Duser.variant Main
+Command Line: -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -Dfile.encoding=windows-1252 -Duser.country=US -Duser.language=en -Duser.variant Ch2Main
 
 Host: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz, 12 cores, 7G,  Windows 10 , 64 bit Build 19041 (10.0.19041.292)
 Time: Sun Sep 27 21:58:13 2020 GTB Daylight Time elapsed time: 2.194104 seconds (0d 0h 0m 2s)
@@ -34,9 +34,9 @@ C  [nvoglv64.dll+0xf9b70e]
 Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
 j  org.lwjgl.opengl.GL11C.glDrawArrays(III)V+0
 j  org.lwjgl.opengl.GL11.glDrawArrays(III)V+3
-j  Main.loop()V+54
-j  Main.run()V+29
-j  Main.main([Ljava/lang/String;)V+7
+j  Ch2Main.loop()V+54
+j  Ch2Main.run()V+29
+j  Ch2Main.main([Ljava/lang/String;)V+7
 v  ~StubRoutines::call_stub
 
 siginfo: EXCEPTION_ACCESS_VIOLATION (0xc0000005), reading address 0x0000000000000000
@@ -473,7 +473,7 @@ symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Wo
 
 VM Arguments:
 jvm_args: -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -Dfile.encoding=windows-1252 -Duser.country=US -Duser.language=en -Duser.variant 
-java_command: Main
+java_command: Ch2Main
 java_class_path (initial): C:\CCppAndGraphics\LwjglLearning\build\classes\java\main;C:\CCppAndGraphics\LwjglLearning\build\resources\main;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.javatuples\javatuples\1.2\507312ac4b601204a72a83380badbca82683dd36\javatuples-1.2.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.jetbrains.intellij.deps\trove4j\1.0.20200330\3afb14d5f9ceb459d724e907a21145e8ff394f02\trove4j-1.0.20200330.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-assimp\3.2.3\f62aa07a20afbdd3097efc296c4841e0d29700eb\lwjgl-assimp-3.2.3.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-assimp\3.2.3\4e60aeb75f0343c4a9ede4ef8b6b32ca702a00a3\lwjgl-assimp-3.2.3-natives-windows.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-bgfx\3.2.3\f589da97dd3cfa96f42c8c812a0a028cf28223b8\lwjgl-bgfx-3.2.3-natives-windows.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-glfw\3.2.3\5e520d5c290c8b012545a8d34fa5db5ab051ea53\lwjgl-glfw-3.2.3.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-glfw\3.2.3\b4d8a3477cdc2edcf7a5f1e822926be846223f54\lwjgl-glfw-3.2.3-natives-windows.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-jemalloc\3.2.3\b6fd0932171ba3f2eaa4547beddca3a3e645342d\lwjgl-jemalloc-3.2.3.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-jemalloc\3.2.3\3423fd0d4c7c1916c8f46b2075c4c2df02f22675\lwjgl-jemalloc-3.2.3-natives-windows.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-nanovg\3.2.3\718be4a13691d1cd276fa852326e9e837d65204e\lwjgl-nanovg-3.2.3.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-nanovg\3.2.3\2fbe5c2849bcf182ba3c6c09828f032a64cd47ec\lwjgl-nanovg-3.2.3-natives-windows.jar;C:\Users\eduard.parvu\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl-nuklear\3.2.3\45bfab23e975201bf3cb81287be6
 Launcher Type: SUN_STANDARD
 

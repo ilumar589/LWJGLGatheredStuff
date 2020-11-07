@@ -1,3 +1,5 @@
+package engine;
+
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.ByteBuffer;
@@ -80,20 +82,17 @@ public final class ShaderProgram {
             int[] infoLogLength = new int[256];
 
             switch (statusToCheck) {
-                case GL_COMPILE_STATUS: {
+                case GL_COMPILE_STATUS:
                     if (glGetShaderi(id, statusToCheck) == NULL) {
                         glGetShaderInfoLog(id, infoLogLength, infoLog);
-                    }
-                } break;
-                case GL_LINK_STATUS: {}
-                case GL_VALIDATE_STATUS: {
+                    }break;
+                case GL_LINK_STATUS:
+                case GL_VALIDATE_STATUS:
                     if (glGetProgrami(id, statusToCheck) == NULL) {
                         glGetProgramInfoLog(id, infoLogLength, infoLog);
-                    }
-                } break;
-                default: {
+                    }break;
+                default:
                     throw new RuntimeException("No recognized log action has been sent: " + statusToCheck);
-                }
             }
 
             System.out.println(infoLog.asReadOnlyBuffer().toString());
